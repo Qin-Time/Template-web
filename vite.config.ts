@@ -3,17 +3,30 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     vueDevTools(),
+    AutoImport({
+      imports: ['vue', 'vue-router'],
+      resolvers: [ElementPlusResolver()],
+      dts: 'src/auto-imports.d.ts', // 自动生成类型声明
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()],
+      dts: 'src/components.d.ts',
+    }),
   ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
+
   },
   server: {
     port: 5173,
@@ -24,4 +37,12 @@ export default defineConfig({
       },
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // 引入断点变量文件，使其在所有 SCSS 文件中可用
+        additionalData: `@use "@/styles/breakpoints.scss" as *;`
+      }
+    }
+  }
 })

@@ -1,3 +1,7 @@
+# 这是一个顶级配置文件，停止向上查找
+root = true
+
+# 针对所有前端代码文件
 [*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,vue,css,scss,sass,less,styl}]
 charset = utf-8
 indent_size = 2
@@ -6,3 +10,8 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 end_of_line = lf
 max_line_length = 100
+
+# 针对 Markdown 文件，不需要强制最大行宽，且忽略行尾空格
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false

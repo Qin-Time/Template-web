@@ -1,0 +1,8 @@
+/* src/styles/index.scss */
+@use "./variables.scss" as *;
+
+/* 下面写你的全局 reset、滚动条美化等 */
+body {
+  margin: 0;
+  background-color: var(--bg-canvas);
+}
